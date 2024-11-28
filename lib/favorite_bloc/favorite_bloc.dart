@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'favorite_event.dart';
 import 'favorite_state.dart';
 
-//TODO: THIS CODE DOESN'T FVCKING WORK FIX IT U BOZO >:(
-
 class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   final FavoriteApi favoriteApi;
 

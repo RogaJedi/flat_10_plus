@@ -70,32 +70,17 @@ class ProductPage extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          Positioned(
-              top: 10,
-              right: 10,
-              child: BlocBuilder<FavoriteBloc, FavoriteState>(
-                builder: (context, state) {
-                  final isFavorite = state.favorites.any((f) => f.productId == product.productId);
-                  return IconButton(
-                    icon: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorite ? Colors.red : Colors.grey,
-                    ),
-                    onPressed: () {
-                      context.read<FavoriteBloc>().add(ToggleFavoriteEvent(userId: 0, productId: productId));
-                    },
-                  );
-                },
-              ),
-          ),
           Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: ListView(
                 children: [
+                  Image.network(product.imageUrl),
+                  /*
                   Text(
                     product.imageUrl,
                     style: const TextStyle(color: Colors.black, fontSize: 20),
                   ),
+
+                   */
                   const SizedBox(height: 20),
                   Text(
                     product.description,
@@ -106,7 +91,6 @@ class ProductPage extends StatelessWidget {
                     product.price.toString(),
                     style: const TextStyle(color: Colors.black, fontSize: 20),
                   ),
-                  const SizedBox(height: 20),
                   const SizedBox(height: 20),
                   BlocBuilder<CartBloc, CartState> (
                       builder: (context, state) {
@@ -131,8 +115,27 @@ class ProductPage extends StatelessWidget {
                         );
                       }
                   ),
+                  const SizedBox(height: 20),
                 ],
               )
+          ),
+          Positioned(
+              top: 10,
+              right: 10,
+              child: BlocBuilder<FavoriteBloc, FavoriteState>(
+                builder: (context, state) {
+                  final isFavorite = state.favorites.any((f) => f.productId == product.productId);
+                  return IconButton(
+                    icon: Icon(
+                      isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: isFavorite ? Colors.red : Colors.black,
+                    ),
+                    onPressed: () {
+                      context.read<FavoriteBloc>().add(ToggleFavoriteEvent(userId: 0, productId: productId));
+                    },
+                  );
+                },
+              ),
           ),
         ],
       )
