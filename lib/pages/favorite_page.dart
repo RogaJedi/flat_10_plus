@@ -1,3 +1,5 @@
+import 'package:flat_10plus/api/product_api.dart';
+import 'package:flat_10plus/models/favorite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../favorite_bloc/favorite_bloc.dart';
@@ -6,19 +8,34 @@ import '../models/product.dart';
 import '../widgets/product_card.dart';
 
 class FavoritePage extends StatelessWidget {
-  final List<Product> productList;
+  final ProductApi productApi;
 
   const FavoritePage({
     Key? key,
-    required this.productList,
+    required this.productApi
   }) : super(key: key);
-
-  Product getProduct(int favoriteId) {
-    return productList.firstWhere((product) => product.productId == favoriteId);
-  }
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<FavoriteBloc, FavoriteState>(
+      builder: (context, state) {
+        return _buildScaffold(context, state.favorites);
+      },
+    );
+  }
+
+  Future<Product?> getProduct(int productId) async {
+    try {
+      // Fetch the product from your repository or API
+      return await productApi.getProduct(productId);
+    } catch (e) {
+      print('Error fetching product: $e');
+      return null;
+    }
+  }
+
+
+  Widget _buildScaffold(BuildContext context, List<Favorite> favoriteList) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Избранное"),
@@ -36,13 +53,24 @@ class FavoritePage extends StatelessWidget {
             ),
             itemCount: favoriteList.length,
             itemBuilder: (BuildContext context, int index) {
-              final product = getProduct(favoriteList[index].productId);
-              return ProductCard(product: product);
+              return FutureBuilder<Product?>(
+                future: getProduct(state.favorites[index].productId),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return const Center(child: Text('Error loading product'));
+                  } else if (snapshot.hasData && snapshot.data != null) {
+                    return ProductCard(product: snapshot.data!);
+                  } else {
+                    return const Center(child: Text('Product not found'));
+                  }
+                },
+              );
             },
           );
         },
       ),
     );
   }
-
 }

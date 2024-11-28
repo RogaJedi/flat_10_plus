@@ -1,4 +1,5 @@
 import 'package:flat_10plus/api/api_service.dart';
+import 'package:flat_10plus/models/favorite.dart';
 
 class FavoriteApi {
   final ApiService _apiService;
@@ -9,8 +10,8 @@ class FavoriteApi {
     try {
       final response = await _apiService.dio.get('${_apiService.baseUrl}/favorites/$userId');
       if (response.statusCode == 200) {
-        List<dynamic> data = response.data;
-        return data.map((item) => Favorite.fromJson(item)).toList();
+        final List<dynamic> favoriteData = response.data;
+        return favoriteData.map((json) => Favorite.fromJson(json)).toList();
       } else {
         throw Exception('Failed to load favorites');
       }
@@ -26,9 +27,11 @@ class FavoriteApi {
         data: {'product_id': productId},
       );
       if (response.statusCode != 200) {
-        throw Exception('Failed to add to favorites');
+        print('Response data: ${response.data}');
+        throw Exception('Failed to add to favorites: ${response.statusCode}');
       }
     } catch (e) {
+      print('Error adding to favorites: $e');
       throw Exception('Error adding to favorites: $e');
     }
   }
@@ -54,19 +57,5 @@ class FavoriteApi {
       // Handle error or return false if there's an issue
       return false;
     }
-  }
-}
-
-class Favorite {
-  final int userId;
-  final int productId;
-
-  Favorite({required this.userId, required this.productId});
-
-  factory Favorite.fromJson(Map<String, dynamic> json) {
-    return Favorite(
-      userId: json['user_id'],
-      productId: json['product_id'],
-    );
   }
 }

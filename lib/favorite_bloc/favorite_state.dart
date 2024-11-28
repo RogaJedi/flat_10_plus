@@ -1,29 +1,31 @@
 import 'package:equatable/equatable.dart';
 import '../models/favorite.dart';
 
+enum FavoriteStatus { initial, loading, success, failure }
+
 class FavoriteState extends Equatable {
   final List<Favorite> favorites;
-  final bool isLoading;
-  final String? error;
+  final FavoriteStatus status;
+  final String? errorMessage;
 
   const FavoriteState({
-    required this.favorites,
-    this.isLoading = false,
-    this.error,
+    this.favorites = const [],
+    this.status = FavoriteStatus.initial,
+    this.errorMessage,
   });
 
   @override
-  List<Object?> get props => [favorites, isLoading, error];
+  List<Object?> get props => [favorites, status, errorMessage];
 
   FavoriteState copyWith({
     List<Favorite>? favorites,
-    bool? isLoading,
-    String? error,
+    FavoriteStatus? status,
+    String? errorMessage,
   }) {
     return FavoriteState(
       favorites: favorites ?? this.favorites,
-      isLoading: isLoading ?? this.isLoading,
-      error: error ?? this.error,
+      status: status ?? this.status,
+      errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 }

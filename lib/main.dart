@@ -1,6 +1,7 @@
 import 'package:flat_10plus/api/api_service.dart';
 import 'package:flat_10plus/api/favorite_api.dart';
 import 'package:flat_10plus/api/product_api.dart';
+import 'package:flat_10plus/favorite_bloc/favorite_event.dart';
 import 'package:flat_10plus/product_bloc/product_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,8 +28,8 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => NavigationCubit()),
         BlocProvider(create: (context) => FavoriteBloc(
-          favoriteApi: FavoriteApi(ApiService())
-        )),
+          favoriteApi: FavoriteApi(ApiService()))..add(LoadFavoritesEvent(0)),
+        ),
         BlocProvider(create: (context) => CartBloc()),
         BlocProvider(create: (context) => ProductBloc(
             productApi: ProductApi(ApiService()))..add(LoadProductsEvent()),
@@ -55,7 +56,7 @@ class MyHomePage extends StatelessWidget {
     final List<Widget> _pages = [
       HomePage(),
       FavoritePage(
-        productList: [],
+        productApi: ProductApi(ApiService()),
       ),
       CartPage(
         productList: [],

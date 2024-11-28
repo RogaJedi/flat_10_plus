@@ -1,9 +1,10 @@
 import 'package:flat_10plus/api/favorite_api.dart';
+import 'package:flat_10plus/models/favorite.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'favorite_event.dart';
 import 'favorite_state.dart';
 
-//TODO: THIS CODE DOESN'T FVCKING WORK FIX IT U BOZO >:[
+//TODO: THIS CODE DOESN'T FVCKING WORK FIX IT U BOZO >:(
 
 class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   final FavoriteApi favoriteApi;
@@ -15,45 +16,65 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   }
 
   Future<void> _onLoadFavorites(LoadFavoritesEvent event, Emitter<FavoriteState> emit) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(status: FavoriteStatus.loading));
     try {
-      final favorites = await favoriteApi.getFavorites(event.userId);
-      emit(state.copyWith(isLoading: false));
+      final loadedFavorites = await favoriteApi.getFavorites(event.userId);
+      emit(state.copyWith(
+        status: FavoriteStatus.success,
+        favorites: loadedFavorites
+      ));
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false));
+      emit(state.copyWith(
+          status: FavoriteStatus.failure,
+          errorMessage: e.toString()
+      ));
     }
   }
 
   Future<void> _onToggleFavorite(ToggleFavoriteEvent event, Emitter<FavoriteState> emit) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(status: FavoriteStatus.loading));
     try {
       final isFavorite = state.favorites.any((f) => f.productId == event.productId);
       if (isFavorite) {
         await favoriteApi.removeFromFavorites(event.userId, event.productId);
         final updatedFavorites = state.favorites.where((f) => f.productId != event.productId).toList();
-        emit(state.copyWith(favorites: updatedFavorites, isLoading: false));
+        emit(state.copyWith(
+            favorites: updatedFavorites,
+            status: FavoriteStatus.success
+        ));
       } else {
-        await favoriteApi.addToFavorites(event.userId, event.productId);
-        // Create a new Favorite object manually
-        final newFavorite = Favorite( // Use a temporary ID
-          userId: event.userId,
+        final newFavorite = Favorite(
+          userId: 0,
           productId: event.productId,
         );
-        emit(state.copyWith(favorites: [...state.favorites, ], isLoading: false));
+        await favoriteApi.addToFavorites(event.userId, event.productId);
+        emit(state.copyWith(
+            favorites: [...state.favorites, newFavorite],
+            status: FavoriteStatus.success,
+        ));
       }
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false));
+      emit(state.copyWith(
+          status: FavoriteStatus.failure,
+          errorMessage: e.toString()
+      ));
     }
   }
 
   Future<void> _onRemoveFavorite(RemoveFavoriteEvent event, Emitter<FavoriteState> emit) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(status: FavoriteStatus.loading));
     try {
       await favoriteApi.removeFromFavorites(event.userId, event.productId);
       final updatedFavorites = state.favorites.where((f) => f.productId != event.productId).toList();
-      emit(state.copyWith(favorites: updatedFavorites, isLoading: false));
+      emit(state.copyWith(
+          favorites: updatedFavorites,
+          status: FavoriteStatus.success
+      ));
     } catch (e) {
-      emit(state.copyWith(error: e.toString(), isLoading: false));
+      emit(state.copyWith(
+          status: FavoriteStatus.failure,
+          errorMessage: e.toString()
+      ));
     }
   }
 }
