@@ -22,7 +22,7 @@ class ProductDeletionBloc extends Bloc<ProductDeletionEvent, ProductDeletionStat
   void _onDeleteProduct(DeleteProductEvent event, Emitter<ProductDeletionState> emit) {
     productBloc.add(RemoveProductEvent(productId: event.productId));
     favoriteBloc.add(RemoveFavoriteEvent(userId: 0, productId: event.productId));
-    cartBloc.add(RemoveCartEvent(productId: event.productId));
+    cartBloc.add(RemoveCartEvent(0, event.productId));
     emit(ProductDeletionSuccess());
   }
 }

@@ -56,9 +56,7 @@ class FavoritePage extends StatelessWidget {
               return FutureBuilder<Product?>(
                 future: getProduct(state.favorites[index].productId),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
+                  if (snapshot.hasError) {
                     return const Center(child: Text('Error loading product'));
                   } else if (snapshot.hasData && snapshot.data != null) {
                     return ProductCard(product: snapshot.data!);

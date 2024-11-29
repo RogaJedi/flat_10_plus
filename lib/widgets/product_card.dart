@@ -6,6 +6,8 @@ import '../pages/product_related/product_page.dart';
 import '../favorite_bloc/favorite_state.dart';
 import '../models/product.dart';
 
+//TODO: КАРТИНКА, НАЗВАНИЕ, ОПИСАНИЕ, ЦЕНА
+
 class ProductCard extends StatelessWidget {
   final Product product;
 

@@ -1,45 +1,67 @@
+import 'package:flat_10plus/api/cart_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../api/cart_list.dart';
 import '../cart_bloc/cart_event.dart';
 import '../cart_bloc/cart_state.dart';
-import '../models/cart.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
-  CartBloc() : super(CartState(carts: List.from(CartList.carts), quantity: 0)) {
+  final CartApi cartApi;
+
+  CartBloc({required this.cartApi}) : super(CartState()) {
+    on<LoadCartEvent>(_onLoadCart);
     on<AddCartEvent>(_onAddCart);
-    on<IncrementQuantityEvent>(_onIncrementQuantity);
-    on<DecrementQuantityEvent>(_onDecrementQuantity);
     on<RemoveCartEvent>(_onRemoveCart);
-    on<UpdateQuantityEvent>(_onUpdateQuantity);
   }
 
-  void _onAddCart(AddCartEvent event, Emitter<CartState> emit) {
-    CartList.addCart(Cart(
-        cartId: DateTime.now().millisecondsSinceEpoch,
-        userId: 0,
-        productId: event.productId,
-        quantity: 1
-    ));
-    emit(CartState(carts: List.from(CartList.carts), quantity: CartList.getQuantity(event.productId)));
+  Future<void> _onLoadCart(LoadCartEvent event, Emitter<CartState> emit) async {
+    emit(state.copyWith(status: CartStatus.loading));
+    try {
+      final carts = await cartApi.getCart(event.userId);
+      emit(state.copyWith(
+        carts: carts,
+        status: CartStatus.success,
+        quantity: carts.fold(0, (sum, cart) => sum! + cart.quantity),
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        status: CartStatus.failure,
+        errorMessage: e.toString(),
+      ));
+    }
   }
 
-  void _onIncrementQuantity(IncrementQuantityEvent event, Emitter<CartState> emit) {
-    CartList.incrementQuantity(event.productId);
-    emit(CartState(carts: List.from(CartList.carts), quantity: CartList.getQuantity(event.productId)));
+  Future<void> _onAddCart(AddCartEvent event, Emitter<CartState> emit) async {
+    emit(state.copyWith(status: CartStatus.loading));
+    try {
+      await cartApi.addToCart(event.userId, event.productId, event.quantity);
+      final carts = await cartApi.getCart(event.userId);
+      emit(state.copyWith(
+        carts: carts,
+        status: CartStatus.success,
+        quantity: carts.fold(0, (sum, cart) => sum! + cart.quantity),
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        status: CartStatus.failure,
+        errorMessage: e.toString(),
+      ));
+    }
   }
 
-  void _onDecrementQuantity(DecrementQuantityEvent event, Emitter<CartState> emit) {
-    CartList.decrementQuantity(event.productId);
-    emit(CartState(carts: List.from(CartList.carts), quantity: CartList.getQuantity(event.productId)));
-  }
-
-  void _onRemoveCart(RemoveCartEvent event, Emitter<CartState> emit) {
-    CartList.removeCart(event.productId);
-    emit(CartState(carts: List.from(CartList.carts), quantity: 0));
-  }
-
-  void _onUpdateQuantity(UpdateQuantityEvent event, Emitter<CartState> emit) {
-    emit(CartState(carts: state.carts, quantity: CartList.getQuantity(event.productId)));
+  Future<void> _onRemoveCart(RemoveCartEvent event, Emitter<CartState> emit) async {
+    emit(state.copyWith(status: CartStatus.loading));
+    try {
+      await cartApi.removeFromCart(event.userId, event.productId);
+      final carts = await cartApi.getCart(event.userId);
+      emit(state.copyWith(
+        carts: carts,
+        status: CartStatus.success,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        status: CartStatus.failure,
+        errorMessage: e.toString(),
+      ));
+    }
   }
 }
 

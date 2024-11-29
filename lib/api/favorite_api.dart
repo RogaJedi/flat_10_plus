@@ -8,7 +8,8 @@ class FavoriteApi {
 
   Future<List<Favorite>> getFavorites(int userId) async {
     try {
-      final response = await _apiService.dio.get('${_apiService.baseUrl}/favorites/$userId');
+      final response = await _apiService.dio.get(
+          '${_apiService.baseUrl}/favorites/$userId');
       if (response.statusCode == 200) {
         final List<dynamic> favoriteData = response.data;
         return favoriteData.map((json) => Favorite.fromJson(json)).toList();

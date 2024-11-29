@@ -97,7 +97,7 @@ class ProductPage extends StatelessWidget {
                         final isAdded = state.carts.any((c) => c.productId == product.productId);
                         return ElevatedButton(
                           onPressed: () {
-                            context.read<CartBloc>().add(AddCartEvent(product.productId));
+                            context.read<CartBloc>().add(AddCartEvent(0, product.productId, 1));
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: isAdded ? Colors.white : Colors.blue,
