@@ -18,12 +18,37 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildScaffold(BuildContext context, List<Product> productList) {
+  Widget _buildScaffold(BuildContext context, List<Product> products) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Главная"),
       ),
-      body: Stack(
+      body: products.isEmpty
+          ? Stack(
+        children: [
+          const Center(child: Text("Товаров нет, добавьте новый")),
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddProductPage()),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFF504BFF),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                height: 60,
+                width: 60,
+                child: const Icon(Icons.add, color: Colors.white),
+              ),
+            ),
+          ),
+        ],
+      )
+          : Stack(
         children: [
           GridView.builder(
             padding: const EdgeInsets.all(8),
@@ -33,9 +58,9 @@ class HomePage extends StatelessWidget {
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
             ),
-            itemCount: productList.length,
+            itemCount: products.length,
             itemBuilder: (BuildContext context, int index) {
-              final product = productList[index];
+              final product = products[index];
               return ProductCard(product: product);
             },
           ),
