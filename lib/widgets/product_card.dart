@@ -6,8 +6,6 @@ import '../pages/product_related/product_page.dart';
 import '../favorite_bloc/favorite_state.dart';
 import '../models/product.dart';
 
-//TODO: КАРТИНКА, НАЗВАНИЕ, ОПИСАНИЕ, ЦЕНА
-
 class ProductCard extends StatelessWidget {
   final Product product;
 
@@ -39,17 +37,14 @@ class ProductCard extends StatelessWidget {
                           width: 150,
                           child: Image.network(product.imageUrl)
                       ),
-                      /*
                       Text(
                         product.name,
-                        style: const TextStyle(color: Colors.white, fontSize: 30),
+                        style: const TextStyle(color: Colors.black, fontSize: 20),
                       ),
-
-                       */
                       const SizedBox(height: 5),
                       Text(
                         product.price.toString(),
-                        style: const TextStyle(color: Colors.black, fontSize: 30),
+                        style: const TextStyle(color: Colors.black, fontSize: 20),
                       ),
                     ],
                   ),

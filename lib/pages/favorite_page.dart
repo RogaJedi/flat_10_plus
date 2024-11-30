@@ -35,12 +35,14 @@ class FavoritePage extends StatelessWidget {
   }
 
 
-  Widget _buildScaffold(BuildContext context, List<Favorite> favoriteList) {
+  Widget _buildScaffold(BuildContext context, List<Favorite> favorites) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Избранное"),
       ),
-      body: BlocBuilder<FavoriteBloc, FavoriteState>(
+      body: favorites.isEmpty
+          ? const Center(child: Text("Избранных товаров нет"))
+          : BlocBuilder<FavoriteBloc, FavoriteState>(
         builder: (context, state) {
           final favoriteList = state.favorites;
           return GridView.builder(
