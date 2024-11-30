@@ -1,16 +1,31 @@
-# flat_10plus
+Программирование Корпоративных Систем
 
-A new Flutter project.
+ЭФБО-03-22 Колпащиков И. М.
 
-## Getting Started
+# Практика №10
 
-This project is a starting point for a Flutter application.
+Магазин настольных игр с подключением к БД
 
-A few resources to get you started if this is your first Flutter project:
+Сделано с BLoC :)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+(Картинки не грузятся на эмуляторе, но на физическом устройстве всё работает)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Добавление нового товара
+
+![alt_text](https://github.com/RogaJedi/flat_10_plus/blob/master/pks_10_demo_1.gif)
+
+Добавление товара в избранное
+
+![alt_text](https://github.com/RogaJedi/flat_10_plus/blob/master/pks_10_demo_2.gif)
+
+Добавление товара в корзину, изменение количества, и удаление
+
+![alt_text](https://github.com/RogaJedi/flat_10_plus/blob/master/pks_10_demo_3.gif)
+
+Обновление информации товара
+
+![alt_text](https://github.com/RogaJedi/flat_10_plus/blob/master/pks_10_demo_4.gif)
+
+Удаление товара (удаление из всех таблиц)
+
+![alt_text](https://github.com/RogaJedi/flat_10_plus/blob/master/pks_10_demo_5.gif)
