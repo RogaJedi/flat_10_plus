@@ -1,16 +1,17 @@
-# flat_10plus
+Программирование Корпоративных Систем
 
-A new Flutter project.
+ЭФБО-03-22 Колпащиков И. М.
 
-## Getting Started
+# Практика №12
 
-This project is a starting point for a Flutter application.
+Поиск товара по названию или описанию
 
-A few resources to get you started if this is your first Flutter project:
+(Демо снова с эмулятора поэтому без картинок товаров)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Совпадения в названии и/или описании выводит товары
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![alt_text](https://github.com/RogaJedi/flat_10_plus/blob/task_12/pks_12_demo_1.gif)
+
+Если совпадений нет, пользователь видит сообщение. Если добавить новый товар с совпадением, он отобразится
+
+![alt_text](https://github.com/RogaJedi/flat_10_plus/blob/task_12/pks_12_demo_2.gif)
