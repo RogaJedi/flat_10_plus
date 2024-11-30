@@ -1,4 +1,5 @@
 import 'package:flat_10plus/auth/auth_service.dart';
+import 'package:flat_10plus/pages/profile_related/logout_confirm_dialog.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -30,7 +31,17 @@ class _ProfilePageState extends State<ProfilePage> {
         title: const Text('Профиль'),
         actions: [
           IconButton(
-            onPressed: logout,
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => LogoutConfirmDialog(
+                    onConfirm: () {
+                      logout();
+                      Navigator.pop(context);
+                    },
+                  ),
+              );
+            },
             icon: const Icon(Icons.logout),
           ),
         ],
