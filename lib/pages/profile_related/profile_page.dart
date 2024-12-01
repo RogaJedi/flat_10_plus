@@ -62,6 +62,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   fontSize: 15,
                 ),
               ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                  onPressed: () {},
+                  child: const Text("Ваши заказы")
+              ),
               const SizedBox(height: 60),
             ],
           )

@@ -1,10 +1,12 @@
 import 'package:flat_10plus/api/api_service.dart';
 import 'package:flat_10plus/api/cart_api.dart';
 import 'package:flat_10plus/api/favorite_api.dart';
+import 'package:flat_10plus/api/order_api.dart';
 import 'package:flat_10plus/api/product_api.dart';
 import 'package:flat_10plus/auth/auth_gate.dart';
 import 'package:flat_10plus/cart_bloc/cart_event.dart';
 import 'package:flat_10plus/favorite_bloc/favorite_event.dart';
+import 'package:flat_10plus/order_bloc/order_bloc.dart';
 import 'package:flat_10plus/product_bloc/product_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,6 +50,12 @@ class MyApp extends StatelessWidget {
           productBloc: context.read<ProductBloc>(),
           favoriteBloc: context.read<FavoriteBloc>(),
           cartBloc: context.read<CartBloc>(),
+        )),
+        BlocProvider(create: (context) => OrderBloc(
+            OrderApi(ApiService()),
+            ProductApi(ApiService()),
+            CartBloc(cartApi: CartApi(ApiService())),
+            CartApi(ApiService()),
         )),
       ],
       child: const MaterialApp(

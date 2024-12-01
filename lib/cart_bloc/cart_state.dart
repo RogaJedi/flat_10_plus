@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flat_10plus/models/product.dart';
 import '../models/cart.dart';
 
 enum CartStatus { initial, loading, success, failure }
