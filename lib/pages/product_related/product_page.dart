@@ -4,7 +4,6 @@ import '../../cart_bloc/cart_bloc.dart';
 import '../../cart_bloc/cart_event.dart';
 import '../../cart_bloc/cart_state.dart';
 import '../../pages/product_related/edit_product_page.dart';
-import '../../pages/product_related/product_deletion_dialog.dart';
 import '../../product_bloc/product_bloc.dart';
 import '../../product_bloc/product_deletion_bloc.dart';
 import '../../product_bloc/product_state.dart';
@@ -12,6 +11,7 @@ import '../../favorite_bloc/favorite_bloc.dart';
 import '../../favorite_bloc/favorite_event.dart';
 import '../../favorite_bloc/favorite_state.dart';
 import '../../models/product.dart';
+import '../../widgets/deletion_dialog.dart';
 
 class ProductPage extends StatelessWidget {
   final int productId;
@@ -54,12 +54,13 @@ class ProductPage extends StatelessWidget {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (BuildContext context) => ProductDeletionDialog(
+                      builder: (BuildContext context) => DeletionDialog(
                         onConfirm: () {
                           context.read<ProductDeletionBloc>().add(DeleteProductEvent(productId: product.productId));
                           Navigator.of(context).pop(); // Close the dialog
                           Navigator.of(context).pop(); // Close the product page
                         },
+                        thingToDeleteText: "Удалить товар",
                       ),
                     );
                   },

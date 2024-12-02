@@ -1,37 +1,20 @@
-import 'package:flat_10plus/auth/auth_service.dart';
 import 'package:flat_10plus/pages/orders_page.dart';
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
-
-  @override
-  _ProfilePageState createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
-
-  final authService = AuthService();
-
-  void logout() async {
-    await authService.signOut();
-
-  }
+class TestProfilePage extends StatelessWidget {
+  const TestProfilePage({Key? key}) : super(key: key);
 
 
 
   @override
   Widget build(BuildContext context) {
 
-    final userId = authService.getUserId();
-    final userEmail = authService.getUserEmail();
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Профиль'),
+        title: const Text('Тестовый профиль'),
         actions: [
           IconButton(
-            onPressed: logout,
+            onPressed: () {},
             icon: const Icon(Icons.logout),
           ),
         ],
@@ -48,17 +31,17 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               const SizedBox(height: 10),
-              Text(
-                "ID:$userId",
-                style: const TextStyle(
+              const Text(
+                "ID: 0",
+                style: TextStyle(
                   color: Colors.black,
                   fontSize: 15,
                 ),
               ),
               const SizedBox(height: 5),
-              Text(
-                "Email:$userEmail",
-                style: const TextStyle(
+              const Text(
+                "Email: user_0_mail@mail.mail",
+                style: TextStyle(
                   color: Colors.black,
                   fontSize: 15,
                 ),
@@ -68,8 +51,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   onPressed: () {
                     Navigator.push(
                       context, MaterialPageRoute(
-                      builder: (context) => const OrdersPage(),
-                    ),
+                        builder: (context) => const OrdersPage(),
+                      ),
                     );
                   },
                   child: const Text("Ваши заказы")

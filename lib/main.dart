@@ -7,6 +7,7 @@ import 'package:flat_10plus/auth/auth_gate.dart';
 import 'package:flat_10plus/cart_bloc/cart_event.dart';
 import 'package:flat_10plus/favorite_bloc/favorite_event.dart';
 import 'package:flat_10plus/order_bloc/order_bloc.dart';
+import 'package:flat_10plus/pages/profile_related/test_profile_page.dart';
 import 'package:flat_10plus/product_bloc/product_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,8 +55,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => OrderBloc(
             OrderApi(ApiService()),
             ProductApi(ApiService()),
-            CartBloc(cartApi: CartApi(ApiService())),
-            CartApi(ApiService()),
         )),
       ],
       child: const MaterialApp(
@@ -79,7 +78,8 @@ class MyHomePage extends StatelessWidget {
       CartPage(
         productApi: ProductApi(ApiService()),
       ),
-      AuthGate(),
+      //AuthGate(),
+      TestProfilePage()
     ];
 
     return BlocBuilder<NavigationCubit, int>(

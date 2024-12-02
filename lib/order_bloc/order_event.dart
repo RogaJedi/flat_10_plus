@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flat_10plus/models/cart.dart';
 import 'package:flat_10plus/models/order.dart';
 
 abstract class OrderEvent extends Equatable {
@@ -17,4 +18,7 @@ class LoadOrders extends OrderEvent {
   List<Object> get props => [userId];
 }
 
-class CreateOrder extends OrderEvent {}
+class CreateOrder extends OrderEvent {
+  final List<Cart> cartItems;
+  const CreateOrder(this.cartItems);
+}

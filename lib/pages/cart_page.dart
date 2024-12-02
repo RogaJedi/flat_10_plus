@@ -65,9 +65,6 @@ class CartPage extends StatelessWidget {
         print('Error fetching product: $e');
       }
     }
-    print("----------");
-    print(total);
-    print("----------");
     return total;
   }
 
@@ -134,7 +131,7 @@ class CartPage extends StatelessWidget {
                         onPressed: orderState.status == OrderStatus.loading
                             ? null
                             : () {
-                          context.read<OrderBloc>().add(CreateOrder());
+                          context.read<OrderBloc>().add(CreateOrder(carts));
                         },
                         child: orderState.status == OrderStatus.loading
                             ? CircularProgressIndicator()

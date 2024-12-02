@@ -1,4 +1,4 @@
-import 'package:flat_10plus/widgets/cart_deletion_dialog.dart';
+import 'package:flat_10plus/widgets/deletion_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cart_bloc/cart_bloc.dart';
@@ -97,11 +97,12 @@ class CartProductCard extends StatelessWidget {
                                       onPressed: () {
                                         showDialog(
                                           context: context,
-                                          builder: (BuildContext context) => CartDeletionDialog(
+                                          builder: (BuildContext context) => DeletionDialog(
                                             onConfirm: () {
                                               context.read<CartBloc>().add(RemoveCartEvent(0, product.productId));
                                               Navigator.of(context).pop();
                                             },
+                                            thingToDeleteText: "Удалить из корзины",
                                           ),
                                         );
                                       },
@@ -121,20 +122,4 @@ class CartProductCard extends StatelessWidget {
     );
   }
 }
-
-/*
-
-context.read<CartBloc>().add(RemoveCartEvent(0, product.productId));
-
-showDialog(
-                      context: context,
-                      builder: (BuildContext context) => ProductDeletionDialog(
-                        onConfirm: () {
-                          context.read<ProductDeletionBloc>().add(DeleteProductEvent(productId: product.productId));
-                          Navigator.of(context).pop(); // Close the dialog
-                          Navigator.of(context).pop(); // Close the product page
-                        },
-                      ),
-                    );
- */
 

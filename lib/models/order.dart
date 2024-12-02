@@ -2,12 +2,14 @@ import 'package:equatable/equatable.dart';
 import 'package:flat_10plus/models/product.dart';
 
 class Order extends Equatable {
+  final int? orderId;
   final int userId;
   late final double total;
   final String status;
   final List<Product> products;
 
   Order({
+    required this.orderId,
     required this.userId,
     required this.total,
     required this.status,
@@ -16,6 +18,7 @@ class Order extends Equatable {
 
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
+      orderId: json['order_id'],
       userId: json['user_id'],
       total: json['total'].toDouble(),
       status: json['status'],

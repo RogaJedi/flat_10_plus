@@ -1,7 +1,5 @@
-import 'package:flat_10plus/api/cart_api.dart';
 import 'package:flat_10plus/api/order_api.dart';
 import 'package:flat_10plus/api/product_api.dart';
-import 'package:flat_10plus/cart_bloc/cart_bloc.dart';
 import 'package:flat_10plus/models/order.dart';
 import 'package:flat_10plus/models/product.dart';
 import 'package:flat_10plus/order_bloc/order_event.dart';
@@ -11,10 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class OrderBloc extends Bloc<OrderEvent, OrderState> {
   final OrderApi _orderApi;
   final ProductApi _productApi;
-  final CartBloc _cartBloc;
-  final CartApi _cartApi;
 
-  OrderBloc(this._orderApi, this._productApi, this._cartBloc, this._cartApi) : super(const OrderState()) {
+  OrderBloc(this._orderApi, this._productApi) : super(const OrderState()) {
     on<LoadOrders>(_onLoadOrders);
     on<CreateOrder>(_onCreateOrder);
   }
@@ -40,15 +36,11 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   Future<void> _onCreateOrder(CreateOrder event, Emitter<OrderState> emit) async {
     emit(state.copyWith(status: OrderStatus.loading));
     try {
-      final cartState = _cartBloc.state;
-      final cartList = _cartApi.getCart(0);
-      print('--------');
-      print(cartList);
-      print('--------');
+
       double total = 0;
       List<Product> productsInTheCart = [];
 
-      for (var cartItem in cartState.carts) {
+      for (var cartItem in event.cartItems) {
         try {
           Product thisProduct = await _productApi.getProduct(cartItem.productId);
           total += thisProduct.price * cartItem.quantity;
@@ -63,9 +55,10 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       }
 
       final newOrder = Order(
+        orderId: 0,
         userId: 0,
         total: total,
-        status: 'pending',
+        status: 'В обработке',
         products: productsInTheCart,
       );
 
@@ -85,3 +78,21 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     }
   }
 }
+
+/*
+{
+    "user_id": 0,
+    "total": 4499.0,
+    "status": "pending",
+    "products": [
+        {
+            "product_id": 5,
+            "name": "Мастера Пламени",
+            "image_url": "https://website.cdn77.luckyduckgames.com/shop-products/September2022/Flamecraft_3Dbox_450x510_EN.png",
+            "description": "Мастера Пламени (Flamecraft) — это очаровательные маленькие драконы, которые живут в небольшом городке в мире и согласии с людьми. Каждый игрок берёт на себя роль волшебника, который понимает язык этих удивительных созданий, а значит, может помочь городу процветать!",
+            "price": 4499,
+            "stock": 10
+        }
+    ]
+}
+ */
