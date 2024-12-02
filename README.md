@@ -1,16 +1,11 @@
-# flat_10plus
+Программирование Корпоративных Систем
 
-A new Flutter project.
+ЭФБО-03-22 Колпащиков И. М.
 
-## Getting Started
+# Практика №13
 
-This project is a starting point for a Flutter application.
+Оформление заказа и страница заказов
 
-A few resources to get you started if this is your first Flutter project:
+(Демо с эмулятора поэтому без картинок товаров)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![alt_text](https://github.com/RogaJedi/flat_10_plus/blob/task_13/pks_13_demo_1.gif)
