@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "297972729470",
+    "project_id": "pksauthapp",
+    "storage_bucket": "pksauthapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297972729470:android:fb77a3710cdfeee4bd3a2f",
+        "android_client_info": {
+          "package_name": "com.example.flat_10plus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv198Umuh0hatt5Gc570nSz17P27tkpqo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297972729470:android:96dc5b6421df028cbd3a2f",
+        "android_client_info": {
+          "package_name": "com.ivan.flat10plus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv198Umuh0hatt5Gc570nSz17P27tkpqo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

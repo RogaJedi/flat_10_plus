@@ -1,6 +1,7 @@
 import 'package:flat_10plus/auth/auth_service.dart';
 import 'package:flat_10plus/pages/orders_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -11,27 +12,31 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
 
-  final authService = AuthService();
 
-  void logout() async {
-    await authService.signOut();
 
+  void signOut() async {
+    final authService = Provider.of<AuthService>(context, listen: false);
+    authService.signOut();
   }
+
 
 
 
   @override
   Widget build(BuildContext context) {
 
-    final userId = authService.getUserId();
-    final userEmail = authService.getUserEmail();
+    final userId = 'userid';
+    final userEmail = 'useremail';
+
+    //final userId = authService.getUserId();
+    //final userEmail = authService.getUserEmail();
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Профиль'),
         actions: [
           IconButton(
-            onPressed: logout,
+            onPressed: signOut,
             icon: const Icon(Icons.logout),
           ),
         ],
@@ -73,6 +78,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     );
                   },
                   child: const Text("Ваши заказы")
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                  onPressed: () {},
+                  child: const Text("Чат с продавцом")
               ),
               const SizedBox(height: 60),
             ],

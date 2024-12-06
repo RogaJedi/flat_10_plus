@@ -1,17 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flat_10plus/api/api_service.dart';
 import 'package:flat_10plus/api/cart_api.dart';
 import 'package:flat_10plus/api/favorite_api.dart';
 import 'package:flat_10plus/api/order_api.dart';
 import 'package:flat_10plus/api/product_api.dart';
 import 'package:flat_10plus/auth/auth_gate.dart';
+import 'package:flat_10plus/auth/auth_service.dart';
 import 'package:flat_10plus/cart_bloc/cart_event.dart';
 import 'package:flat_10plus/favorite_bloc/favorite_event.dart';
+import 'package:flat_10plus/firebase_options.dart';
 import 'package:flat_10plus/order_bloc/order_bloc.dart';
 import 'package:flat_10plus/pages/profile_related/test_profile_page.dart';
 import 'package:flat_10plus/product_bloc/product_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:provider/provider.dart';
 import 'cart_bloc/cart_bloc.dart';
 import 'product_bloc/product_bloc.dart';
 import 'product_bloc/product_deletion_bloc.dart';
@@ -22,13 +25,15 @@ import 'pages/home_page.dart';
 import 'cubit/navigation_cubit.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  await Supabase.initialize(
-      url: 'https://anqntjdyplfmcdnkfgyn.supabase.co',
-      anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFucW50amR5cGxmbWNkbmtmZ3luIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIwNDcxNTMsImV4cCI6MjA0NzYyMzE1M30._PkrMO76mvrUhZFhqDF8vOvjqM3sMdu1keNYGscRjFo'
+  runApp(
+    ChangeNotifierProvider(
+        create: (context) => AuthService(),
+        child: const MyApp(),
+    )
   );
-
-  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -78,8 +83,8 @@ class MyHomePage extends StatelessWidget {
       CartPage(
         productApi: ProductApi(ApiService()),
       ),
-      //AuthGate(),
-      TestProfilePage()
+      AuthGate(),
+      //TestProfilePage()
     ];
 
     return BlocBuilder<NavigationCubit, int>(

@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flat_10plus/pages/profile_related/profile_page.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import '../pages/profile_related/login_page.dart';
 
 class AuthGate extends StatelessWidget {
@@ -8,25 +8,17 @@ class AuthGate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: Supabase.instance.client.auth.onAuthStateChange,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
+    return Scaffold(
+      body: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return const ProfilePage();
+            } else {
+              return const LoginPage();
+            }
           }
-
-          final session = snapshot.hasData ? snapshot.data!.session : null;
-
-          if (session != null) {
-            return ProfilePage();
-          } else {
-            return LoginPage();
-          }
-        }
+      ),
     );
   }
 }

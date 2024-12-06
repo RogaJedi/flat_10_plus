@@ -1,5 +1,6 @@
 import 'package:flat_10plus/auth/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -17,27 +18,25 @@ class _RegisterPageState extends State<RegisterPage> {
   final _confirmPasswordController = TextEditingController();
 
   void signUp() async {
-    final email = _emailController.text;
-    final password = _passwordController.text;
-    final confirmPassword = _confirmPasswordController.text;
 
-    if (password != confirmPassword ) {
+    if (_passwordController.text != _confirmPasswordController.text ) {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Passwords don't match"))
       );
       return;
     }
 
-    try {
-      await authService.signUpWithEmailAndPassword(email, password);
+    final authService = Provider.of<AuthService>(context, listen: false);
 
+    try {
+      await authService.signUpWithEmailAndPassword(
+        _emailController.text,
+        _passwordController.text,
+      );
       Navigator.pop(context);
 
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Error: $e")));
-      }
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
     }
 
   }

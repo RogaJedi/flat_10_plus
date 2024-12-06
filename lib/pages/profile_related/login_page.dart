@@ -1,6 +1,7 @@
 import 'package:flat_10plus/auth/auth_service.dart';
 import 'package:flat_10plus/pages/profile_related/register_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -11,30 +12,22 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  // SUPABASE DB PASS bgshopSUPA12345
-
-  final authService = AuthService();
-
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   void login() async {
-    final email = _emailController.text;
-    final password = _passwordController.text;
+    final authService = Provider.of<AuthService>(context, listen: false);
 
     try {
-      await authService.signInWithEmailAndPassword(email, password);
+      await authService.signInWithEmailAndPassword(
+          _emailController.text,
+          _passwordController.text,
+      );
 
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Error: $e")));
-      }
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
     }
-
   }
-
-
 
   @override
   Widget build(BuildContext context) {
