@@ -63,31 +63,49 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 20),
 
 
-              TextField(
-                scrollPadding: const EdgeInsets.only(bottom: 40),
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Почта',
+              SizedBox(
+                width: 350,
+                child: TextField(
+                  scrollPadding: const EdgeInsets.only(bottom: 40),
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    hintText: 'Почта',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  maxLines: 1,
                 ),
-                maxLines: 1,
               ),
               const SizedBox(height: 10),
-              TextField(
-                scrollPadding: const EdgeInsets.only(bottom: 40),
-                controller: _passwordController,
-                decoration: const InputDecoration(
-                  labelText: 'Пароль',
+              SizedBox(
+                width: 350,
+                child: TextField(
+                  scrollPadding: const EdgeInsets.only(bottom: 40),
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    hintText: 'Пароль',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  maxLines: 1,
                 ),
-                maxLines: 1,
               ),
               const SizedBox(height: 10),
-              TextField(
-                scrollPadding: const EdgeInsets.only(bottom: 40),
-                controller: _confirmPasswordController,
-                decoration: const InputDecoration(
-                  labelText: 'Подтвердите пароль',
+              SizedBox(
+                width: 350,
+                child: TextField(
+                  scrollPadding: const EdgeInsets.only(bottom: 40),
+                  controller: _confirmPasswordController,
+                  decoration: InputDecoration(
+                    hintText: 'Подтвердите пароль',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  maxLines: 1,
                 ),
-                maxLines: 1,
               ),
 
 

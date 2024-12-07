@@ -11,7 +11,7 @@ import '../../favorite_bloc/favorite_bloc.dart';
 import '../../favorite_bloc/favorite_event.dart';
 import '../../favorite_bloc/favorite_state.dart';
 import '../../models/product.dart';
-import '../../widgets/deletion_dialog.dart';
+import '../../widgets/confirmation_dialog.dart';
 
 class ProductPage extends StatelessWidget {
   final int productId;
@@ -54,13 +54,13 @@ class ProductPage extends StatelessWidget {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (BuildContext context) => DeletionDialog(
+                      builder: (BuildContext context) => ConfirmationDialog(
                         onConfirm: () {
                           context.read<ProductDeletionBloc>().add(DeleteProductEvent(productId: product.productId));
                           Navigator.of(context).pop(); // Close the dialog
                           Navigator.of(context).pop(); // Close the product page
                         },
-                        thingToDeleteText: "Удалить товар",
+                        thingToConfirmText: "Удалить товар",
                       ),
                     );
                   },

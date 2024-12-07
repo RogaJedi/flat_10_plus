@@ -47,22 +47,34 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              TextField(
-                scrollPadding: const EdgeInsets.only(bottom: 40),
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Почта',
+              SizedBox(
+                width: 350,
+                child: TextField(
+                  scrollPadding: const EdgeInsets.only(bottom: 40),
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    hintText: 'Почта',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  maxLines: 1,
                 ),
-                maxLines: 1,
               ),
               const SizedBox(height: 10),
-              TextField(
-                scrollPadding: const EdgeInsets.only(bottom: 40),
-                controller: _passwordController,
-                decoration: const InputDecoration(
-                  labelText: 'Пароль',
+              SizedBox(
+                width: 350,
+                child: TextField(
+                  scrollPadding: const EdgeInsets.only(bottom: 40),
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    hintText: 'Пароль',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  maxLines: 1,
                 ),
-                maxLines: 1,
               ),
               const SizedBox(height: 20),
               ElevatedButton(
@@ -81,35 +93,20 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
 
 
-              const Text(
-                "Создайте аккаунт",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                ),
-              ),
-              const SizedBox(height: 10),
-              ElevatedButton(
+              TextButton(
                 onPressed: () => Navigator.push(
                   context, MaterialPageRoute(
-                    builder: (context) => const RegisterPage(),
-                  ),
+                  builder: (context) => const RegisterPage(),
                 ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  minimumSize: Size(200, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    side: BorderSide(color: Colors.blue),
-                  ),
                 ),
                 child: const Text(
-                  "Регистрация",
+                  "Или создайте аккаунт",
                   style: TextStyle(
-                    color: Colors.blue,
+                      color: Colors.blue,
+                      fontSize: 20
                   ),
                 ),
               ),

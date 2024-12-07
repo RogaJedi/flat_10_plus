@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class DeletionDialog extends StatelessWidget {
+class ConfirmationDialog extends StatelessWidget {
   final VoidCallback onConfirm;
-  final String thingToDeleteText;
+  final String thingToConfirmText;
 
-  const DeletionDialog({
+  const ConfirmationDialog({
     Key? key,
     required this.onConfirm,
-    required this.thingToDeleteText,
+    required this.thingToConfirmText,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(thingToDeleteText),
+      title: Text(thingToConfirmText),
       content: Text('Вы уверены?'),
       actions: <Widget>[
         TextButton(

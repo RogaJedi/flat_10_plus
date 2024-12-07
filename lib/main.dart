@@ -15,7 +15,9 @@ import 'package:flat_10plus/product_bloc/product_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import 'cart_bloc/cart_bloc.dart';
+import 'chat/chat_service.dart';
 import 'product_bloc/product_bloc.dart';
 import 'product_bloc/product_deletion_bloc.dart';
 import 'favorite_bloc/favorite_bloc.dart';
@@ -26,15 +28,20 @@ import 'cubit/navigation_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  WakelockPlus.enable();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(
-    ChangeNotifierProvider(
-        create: (context) => AuthService(),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => AuthService()),
+          ChangeNotifierProvider(create: (context) => ChatService()),
+        ],
         child: const MyApp(),
-    )
+      )
   );
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
