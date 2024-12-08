@@ -1,16 +1,11 @@
-# flat_10plus
+Программирование Корпоративных Систем
 
-A new Flutter project.
+ЭФБО-03-22 Колпащиков И. М.
 
-## Getting Started
+# Практика №14-15
 
-This project is a starting point for a Flutter application.
+Чат покупателя с продавцом
 
-A few resources to get you started if this is your first Flutter project:
+У пользователя есть возможность связаться только с продавцом. У продавца есть возможность связаться только с пользователями, которые ему написали, это единственный функционал страницы продавца.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![alt_text](https://github.com/RogaJedi/flat_10_plus/blob/task_14/pks_14-15_demo.gif)
